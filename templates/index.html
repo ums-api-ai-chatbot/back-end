@@ -1,0 +1,35 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Chat</title>
+</head>
+<script>
+    async function submitForm(event) {
+      event.preventDefault();  // 폼 제출 시 페이지 새로고침 방지
+
+      const question = document.getElementById("question").value;
+  
+      const response = await fetch('/items/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question })
+      });
+  
+      const data = await response.json();
+      alert(data.answer); // 답변 출력
+    }
+</script>
+<body>
+    <h1>Welcome to FastAPI Chat</h1>
+    <form onsubmit="submitForm(event)">
+        <label for="question">Ask a question:</label><br>
+        <input type="text" id="question" name="question" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
