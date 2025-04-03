@@ -1,6 +1,6 @@
 ### 사용예제 코드
 
-```
+``` python
 from langchain.graphs import Graph
 from langchain_core.documents import Document
 from retrieval_grader import RetrievalGrader
