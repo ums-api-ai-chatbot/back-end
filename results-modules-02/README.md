@@ -1,9 +1,6 @@
-from fastapi import FastAPI, Request
-from pydantic import BaseModel
-from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
-from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
+### 사용예제 코드
+
+``` python
 from langchain.graphs import Graph
 from langchain_core.documents import Document
 from retrieval_grader import RetrievalGrader
@@ -14,25 +11,12 @@ from ResultCache import ResultCache
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
-import logging
-# 환경 변수 로드
-load_dotenv()
+## 이 코드는 results-modules-02/를 사용했음.
 
-# FastAPI 앱 생성
-app = FastAPI()
 
-# 템플릿 경로 설정
-templates = Jinja2Templates(directory="templates")
-
-# LLM 객체 생성
-llm = ChatOpenAI(
-    temperature=0.1,
-    model_name="gpt-4o-mini",
-)
-
-# 요청 데이터 모델 정의
-class QuestionRequest(BaseModel):
-    question: str
+# LLM 모델 초기화
+MODEL_NAME = "gpt-4"
+llm = ChatOpenAI(model=MODEL_NAME, temperature=0)
 
 # 평가기 초기화
 retrieval_grader = RetrievalGrader(model_name=MODEL_NAME, temperature=0)
@@ -112,40 +96,23 @@ def hallucination_check_node(state):
     return state
 
 
-@app.on_event("startup")
-def startup_event():
-    print("어플리케이션 실행 후 실행됨")
-    
-    # 그래프 노드 추가
-    graph.add_node("Retrieve", retrieve_node)
-    graph.add_node("GradeDocuments", grade_documents_node)
-    graph.add_node("Generate", generate_node)
-    graph.add_node("HallucinationCheck", hallucination_check_node)
+# 그래프 노드 추가
+graph.add_node("Retrieve", retrieve_node)
+graph.add_node("GradeDocuments", grade_documents_node)
+graph.add_node("Generate", generate_node)
+graph.add_node("HallucinationCheck", hallucination_check_node)
 
-    # 그래프 엣지 정의
-    graph.add_edge("Retrieve", "GradeDocuments")
-    graph.add_edge("GradeDocuments", "Generate")
-    graph.add_edge("Generate", "HallucinationCheck")
+# 그래프 엣지 정의
+graph.add_edge("Retrieve", "GradeDocuments")
+graph.add_edge("GradeDocuments", "Generate")
+graph.add_edge("Generate", "HallucinationCheck")
 
+# 그래프 실행
+final_state = graph.run("Retrieve", state)
 
-
-# 홈 페이지 엔드포인트
-@app.get("/", response_class=HTMLResponse)
-async def get_home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-# API 엔드포인트 정의
-@app.post("/items/")
-async def create_item(request: QuestionRequest):
-    response = llm.invoke(request.question)
-    
-    print("response", response.content)  
-    return {"question": request.question, "answer": response.content}
-
-
-@app.post("/question/")
-async def process_question(request: QuestionRequest):
-    state["question"] = request.question;
-    # 그래프 실행
-    final_state = graph.run("Retrieve", state)
-    return {"question": final_state["question"], "documents": final_state["documents"], "generation": final_state["generation"], "hallucination_score": final_state["hallucination_score"]}
+# 최종 결과 출력
+print("\n==== [FINAL RESULT] ====")
+print(f"Question: {final_state['question']}")
+print(f"Generated Answer: {final_state['generation']}")
+print(f"Hallucination Score: {final_state['hallucination_score']}")
+```
