@@ -19,6 +19,4 @@ spec:
           image: howon/my-fastapi-app  # 사용할 Docker 이미지
           ports:
             - containerPort: 8000  # 애플리케이션의 포트
-          env:
-            - name: ENV_VAR_NAME
-              value: "value"  # 환경 변수 설정
+
