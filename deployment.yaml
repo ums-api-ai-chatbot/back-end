@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-fastapi-app
+  labels:
+    app: my-fastapi-app
+spec:
+  replicas: 2  # 원하는 복제본 수
+  selector:
+    matchLabels:
+      app: my-fastapi-app
+  template:
+    metadata:
+      labels:
+        app: my-fastapi-app
+    spec:
+      containers:
+        - name: my-fastapi-app
+          image: howon/my-fastapi-app  # 사용할 Docker 이미지
+          ports:
+            - containerPort: 8000  # 애플리케이션의 포트
+          env:
+            - name: ENV_VAR_NAME
+              value: "value"  # 환경 변수 설정

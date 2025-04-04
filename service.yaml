@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: back-app
+spec:
+  type: ClusterIP  # 서비스 타입 (예: ClusterIP, NodePort, LoadBalancer)
+  ports:
+    - port: 8000  # 서비스 포트
+      targetPort: 8000  # 컨테이너 포트
+  selector:
+    app: my-fastapi-app  # Deployment와 연결하기 위한 레이블
