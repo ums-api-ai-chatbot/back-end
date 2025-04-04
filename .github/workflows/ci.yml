@@ -38,4 +38,4 @@ jobs:
           port: 10022
           script: |
             cd /data/ums/back-end  # 파일 경로로 이동
-            kubectl apply -f deploy.yaml
+            kubectl apply -f deployment.yaml
