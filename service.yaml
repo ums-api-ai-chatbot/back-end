@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: my-fastapi-app
 spec:
-  type: ClusterIP  # 서비스 타입 (예: ClusterIP, NodePort, LoadBalancer)
+  type: NodePort  # NodePort로 변경
   ports:
     - port: 8000  # 서비스 포트
       targetPort: 8000  # 컨테이너 포트
+      nodePort: 30000  # 원하는 노드 포트 (30000~32767)
   selector:
     app: my-fastapi-app  # Deployment와 연결하기 위한 레이블
