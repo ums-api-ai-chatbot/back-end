@@ -11,7 +11,7 @@ ENV PYTHONUSERBASE=/data
 COPY . .
 
 # 필요한 패키지 설치 (유저 베이스에 설치)
-# RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install --no-cache-dir --user -r requirements.txt
 
 # PATH에 추가
 ENV PATH="/data/bin:$PATH"
