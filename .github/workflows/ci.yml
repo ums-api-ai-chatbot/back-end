@@ -34,4 +34,13 @@ jobs:
           sed -i 's|image: ${{ secrets.howon }}/fastapi-new:.*|image: ${{ secrets.howon }}/fastapi-new:${{ github.sha }}|' deployment.yaml
           cat deployment.yaml  
 
+      - name: Commit and push changes
+        run: |
+          git config --local user.name "${{ secrets.GITUSERNAME }}"
+          git config --local user.email "${{ secrets.GITEMAIL }}"
+          git config --local user.email "${{ secrets.GITPW }}"
+          git add deployment.yaml
+          git commit -m "[skip ci] Update image tag to ${{ github.sha }}"
+          git push
+
     
