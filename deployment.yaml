@@ -5,7 +5,7 @@ metadata:
   labels:
     app: my-fastapi-app
 spec:
-  replicas: 2  # 원하는 복제본 수
+  replicas: 1  # 원하는 복제본 수
   selector:
     matchLabels:
       app: my-fastapi-app
