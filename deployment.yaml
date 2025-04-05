@@ -17,6 +17,28 @@ spec:
       containers:
         - name: my-fastapi-app
           image: howon/fastapi-new  # 사용할 Docker 이미지
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000  # 애플리케이션의 포트
+          env:
+            - name: OPENAI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: my-fastapi-secrets
+                  key: OPENAI_API_KEY
+            - name: LANGCHAIN_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: my-fastapi-secrets
+                  key: LANGCHAIN_API_KEY
+            - name: LANGCHAIN_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: my-fastapi-secrets
+                  key: LANGCHAIN_ENDPOINT
+            - name: LANGSMITH_PROJECT
+              valueFrom:
+                secretKeyRef:
+                  name: my-fastapi-secrets
+                  key: LANGSMITH_PROJECT
 
