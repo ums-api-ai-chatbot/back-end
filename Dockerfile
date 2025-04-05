@@ -5,10 +5,10 @@ FROM python:3.11
 WORKDIR /app
 
 # requirements.txt를 먼저 복사
-COPY requirements.txt .
+# COPY requirements.txt .
 
 # 필요한 패키지 설치 (유저 베이스에 설치)
-RUN pip install --no-cache-dir --user -r requirements.txt
+RUN pip install -r requirements.txt
 
 # 현재 디렉토리의 모든 파일을 컨테이너의 /app으로 복사
 COPY . .
