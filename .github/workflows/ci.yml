@@ -31,6 +31,7 @@ jobs:
 
       - name: Update deployment.yaml 
         run: |
-          sed -i 's|image: ${{ secrets.DOCKER_USERNAME }}/fastapi-new:.*|image: ${{ secrets.DOCKER_USERNAME }}/fastapi-new:${{ github.sha }}|' deployment.yaml
+          sed -i 's|image: ${{ secrets.howon }}/fastapi-new:.*|image: ${{ secrets.howon }}/fastapi-new:${{ github.sha }}|' deployment.yaml
+          cat deployment.yaml  
 
     
