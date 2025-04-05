@@ -28,15 +28,3 @@ jobs:
           context: .
           push: true
           tags: howon/fastapi-new:latest
-
-      - name: Deploy to Kt cloud
-        uses: appleboy/ssh-action@v0.1.8
-        with:
-          host: ${{ secrets.KtCloudIp }}  # KT Cloud ip
-          username: root  # KT Cloud 
-          key: ${{ secrets.k8spem }}  # KT Cloud .pem
-          port: 10022
-          debug: true  # 디버그 모드 활성화
-          script: |
-            cd /data/ums/back-end  # 파일 경로로 이동
-            kubectl apply -f deployment.yaml
