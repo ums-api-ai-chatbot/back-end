@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   fastapi-app:
-    image: fastapi-new
+    image: fastapi-new2
     build:
       context: .
       dockerfile: Dockerfile
