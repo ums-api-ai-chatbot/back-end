@@ -28,3 +28,17 @@ pydantic-core==2.27.2 ; python_version >= "3.11" and python_version < "3.12"
 pydantic-settings==2.8.1 ; python_version >= "3.11" and python_version < "3.12"
 pydantic==2.10.6 ; python_version >= "3.11" and python_version < "3.12"
 python-dotenv==1.0.1 ; python_version >= "3.11" and python_version < "3.12"
+pymermaid>=0.3.0
+tiktoken>=0.5.0
+tavily-python>=0.2.2
+duckduckgo-search>=4.2.0
+faiss-cpu>=1.7.4 ; python_version >= "3.11" and python_version < "3.12"
+python-docx>=0.8.11 ; python_version >= "3.11" and python_version < "3.12"
+unstructured>=0.10.18 ; python_version >= "3.11" and python_version < "3.12"
+pymupdf>=1.22.5 ; python_version >= "3.11" and python_version < "3.12"
+fastapi==0.115.11 ; python_version >= "3.11" and python_version < "3.12"
+uvicorn[standard]==0.34.0 ; python_version >= "3.11" and python_version < "3.12"
+pydantic==2.10.6 ; python_version >= "3.11" and python_version < "3.12"
+pymermaid>=0.3.0 ; python_version >= "3.11" and python_version < "3.12"
+python-dotenv==1.0.1 ; python_version >= "3.11" and python_version < "3.12"
+tiktoken>=0.5.0 ; python_version >= "3.11" and python_version < "3.12"
