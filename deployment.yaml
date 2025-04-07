@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: my-fastapi-app
-          image: howon/fastapi-new2:2abc455ea536af23b5687942b90ead56633b40a0
+          image: howon/fastapi-new2:487d2e0321491d1c7192bd2053817f0e28c9817e
           imagePullPolicy: Always
           ports:
             - containerPort: 8000  # 애플리케이션의 포트
