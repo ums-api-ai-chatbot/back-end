@@ -17,7 +17,6 @@ from typing import List
 from langchain_teddynote.messages import stream_graph, random_uuid
 from langchain_core.runnables import RunnableConfig
 from fastapi.middleware.cors import CORSMiddleware
-
 import logging
 import os
 from pathlib import Path
