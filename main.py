@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
@@ -17,167 +17,224 @@ from typing_extensions import TypedDict, Annotated
 from typing import List
 from langchain_teddynote.messages import stream_graph, random_uuid
 from langchain_core.runnables import RunnableConfig
+from fastapi.middleware.cors import CORSMiddleware
 
 import logging
-# 환경 변수 로드
-load_dotenv()
-MODEL_NAME="gpt-4o-mini"
-# FastAPI 앱 생성
-app = FastAPI()
+import os
+from pathlib import Path
+from typing import Dict, List, Any, Optional
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # 템플릿 경로 설정
 templates = Jinja2Templates(directory="templates")
 
-# LLM 객체 생성
-llm = ChatOpenAI(
-    temperature=0.1,
-    model_name="gpt-4o-mini",
+from langchain_community.vectorstores import FAISS
+from langchain_core.vectorstores import VectorStoreRetriever
+
+from config import HOST, PORT, DOCS_DIR, VECTOR_STORE_PATH
+from document_loader.loader import DocumentProcessor
+from graph.edges import create_chat_graph
+
+# 로깅 설정
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(),
+        logging.FileHandler("kt_ums_chatbot.log"),
+    ],
 )
 
-# 요청 데이터 모델 정의
+logger = logging.getLogger(__name__)
+
+# FastAPI 앱 생성
+app = FastAPI(
+    title="KT-UMS ChatBot API",
+    description="E.G DEV 통신AX플랫폼담당 프로젝트",
+    version=1.0
+)
+
+
+# CORS 설정
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+class AppState:
+    def __init__(self):
+        self.document_processor = None
+        self.retriever = None
+        self.chat_graph = None
+
+app_state = AppState()
+
+
+
+# 모델 정의
 class QuestionRequest(BaseModel):
-    question: str
-# 그래프의 상태 정의
-class GraphState(TypedDict):
-    """
-    그래프의 상태를 나타내는 데이터 모델
+    query: str
+    chat_history: Optional[List[Dict[str, Any]]] = None
 
-    Attributes:
-        question: 질문
-        generation: LLM 생성된 답변
-        documents: 도큐먼트 리스트
-    """
-
-    question: Annotated[str, "User question"]
-    generation: Annotated[str, "LLM generated answer"]
-    documents: Annotated[List[str], "List of documents"]
-# 평가기 초기화
-retrieval_grader = RetrievalGrader(model_name=MODEL_NAME, temperature=0)
-hallucination_grader = HallucinationGrader(model_name=MODEL_NAME, temperature=0)
-
-# 캐시 초기화
-result_cache = ResultCache()
-
-# LangGraph 그래프 생성
-graph = StateGraph(GraphState)
-
-
-# 상태값 초기화
-state = {
-    "question": "What are the latest advancements in AI research?",
-    "documents": [
-        Document(
-            page_content="Recent studies in AI have focused on generative models like GPT-4.",
-            metadata={"source": "AI Journal", "page": 0},
-        ),
-        Document(
-            page_content="Advancements in reinforcement learning have also been significant.",
-            metadata={"source": "RL Conference", "page": 1},
-        ),
-    ],
-    "generation": None,
-    "hallucination_score": None,
-}
-
-# 노드 정의
-def retrieve_node(state):
-    """문서 검색 노드"""
-    print("==== [RETRIEVE NODE] ====")
-    print(state["question"])
-    return state  # 이미 초기화된 문서를 사용하므로 그대로 반환
-
-
-def grade_documents_node(state):
-    """문서 관련성 평가 노드"""
-    print("==== [GRADE DOCUMENTS NODE] ====")
-    # Use the existing retrieval_grader instance
-    state["graded_documents"] = retrieval_grader.evaluate(state["question"], state["documents"])
-    print(f"Graded documents: {state['graded_documents']}")
-    return state
-
-def generate_node(state):
-    """답변 생성 노드"""
-    print("==== [GENERATE NODE] ====")
-    question = state["question"]
-
-    # Generate response
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            ("system", "You are an assistant generating answers based on relevant documents. If you don't know the answer, say 'sorry, I don't know'."),
-            ("human", "Relevant documents: \n\n {context} \n\n User question: {question}"),
-        ]
-    )
-    rag_chain = prompt | llm
-    generator = Generate(rag_chain)
-    result = generator.execute(state)
-
-    # Extract the content of the AIMessage object
-    state["generation"] = result["generation"].content if hasattr(result["generation"], "content") else str(result["generation"])
-
-    # Cache the result
-    result_cache.set(question, state["generation"])
-
-    print(f"Generated response: {state['generation']}")
-    return state  # Return the updated state
+class ChatResponse(BaseModel):
+    answer: str
+    needs_clarification: bool = False
+    clarification_message: Optional[str] = None
+    evaluation: Optional[Dict[str, Any]] = None
 
 
 
-def hallucination_check_node(state):
-    """환각 여부 평가 노드"""
-    print("==== [HALLUCINATION CHECK NODE] ====")
-    documents = state["documents"]
-    generation = state["generation"]
-    hallucination_score = hallucination_grader.evaluate(documents, generation)
-    print(f"Hallucination Score: {hallucination_score}")
-    state["hallucination_score"] = hallucination_score
-    return state  # Return the updated state
+# 초기화 함수
+def init():
+    """시스템을 초기화하고 필요한 컴포넌트를 로드합니다."""
+    logger.info("Initializing the system...")
+    
+    try:
+        # 디렉토리 생성
+        DOCS_DIR.mkdir(parents=True, exist_ok=True)
+        VECTOR_STORE_PATH.mkdir(parents=True, exist_ok=True)
+        
+        # 문서 파일 경로 확인
+        doc_file_path = DOCS_DIR / "KT-UMS OPEN API 연동규격_v1.07.docx"
+        if not doc_file_path.exists():
+            logger.warning(f"Document file not found: {doc_file_path}")
+            logger.warning("Please place the document file in the data directory")
+            return False
+        
+        # 문서 처리기 초기화
+        app_state.document_processor = DocumentProcessor()
+        
+        # 벡터 저장소 로드 또는 생성
+        vector_store = app_state.document_processor.load_vector_store()
+        if vector_store is None:
+            logger.error("Failed to initialize vector store")
+            return False
+        
+        # 벡터 저장소가 적절히 초기화되었는지 확인
+        if not hasattr(vector_store, 'index') or vector_store.index is None or vector_store.index.ntotal == 0:
+            logger.error("Vector store was initialized but contains no vectors")
+            return False
+        
+        # 검색기 생성
+        app_state.retriever = vector_store.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": 5}
+        )
+        
+        # 그래프 생성
+        app_state.chat_graph = create_chat_graph(app_state.retriever)
+        
+        # 그래프가 생성되었는지 확인
+        if app_state.chat_graph is None:
+            logger.error("Failed to create chat graph")
+            return False
+        
+        # 그래프 시각화 시도
+        try:
+            # mermaid 코드 생성
+            mermaid_code = app_state.chat_graph.get_graph().draw_mermaid()
+            
+            # 파일에 mermaid 코드 저장
+            with open("chat_graph.mmd", "w") as f:
+                f.write(mermaid_code)
+            logger.info("Graph visualization saved to chat_graph.mmd")
+            
+            # PNG로 변환 시도
+            try:
+                import pymermaid
+                graph_image = app_state.chat_graph.get_graph().draw_mermaid_png()
+                with open("chat_graph.png", "wb") as f:
+                    f.write(graph_image)
+                logger.info("Graph visualization saved to chat_graph.png")
+            except Exception as e:
+                logger.warning(f"Failed to create PNG visualization: {e}")
+                
+        except Exception as e:
+            logger.warning(f"Failed to visualize graph: {e}")
+        
+        logger.info("System initialization completed successfully")
+        return True
+    
+    except Exception as e:
+        logger.error(f"Unexpected error during initialization: {e}")
+        return False
+
+# 엔드포인트
+@app.get("/")
+async def root():
+    return {"message": "KT-UMS API ChatBot is running"}
+
+@app.post("/question", response_model=ChatResponse)
+async def ask_question(request: QuestionRequest):
+    """질문을 처리하고 응답을 반환합니다."""
+    
+    logger.info("인입 된 질문 : " + request.query)
+
+    if app_state.chat_graph is None:
+        raise HTTPException(status_code=500, detail="초 비 상 !!!!!")
+    
+    
+    try:
+        # 그래프 실행
+        result = app_state.chat_graph.invoke({
+            "query": request.query,
+            "chat_history": request.chat_history
+        })
+        
+        # 결과 처리
+        if result.get("needs_clarification", False):
+            return ChatResponse(
+                answer="",
+                needs_clarification=True,
+                clarification_message=result.get("clarification_message", "질문을 명확히 해주세요.")
+            )
+        
+        # 최종 답변 결정
+        answer = result.get("final_answer") or result.get("answer") or "답변을 생성할 수 없습니다."
+        
+        # 평가 결과 수집
+        evaluation = None
+        if "hallucination" in result and "quality" in result:
+            evaluation = {
+                "hallucination": result["hallucination"],
+                "quality": result["quality"]
+            }
+        
+        return ChatResponse(
+            answer=answer,
+            evaluation=evaluation
+        )
+    
+    except Exception as e:
+        logger.error(f"Error processing question: {e}")
+        raise HTTPException(status_code=500, detail=f"Error processing question: {str(e)}")
+
 
 
 @app.on_event("startup")
-def startup_event():
-    print("어플리케이션 실행 후 실행됨")
-    # 그래프 상태 초기화
-
-    # 그래프 노드 추가
-    graph.add_node("Retrieve", retrieve_node)
-    graph.add_node("RetrievalGrader", grade_documents_node)
-    graph.add_node("Generate", generate_node)
-    graph.add_node("HallucinationCheck", hallucination_check_node)
-
-    # 그래프 엣지 정의
-    graph.add_edge(START, "Retrieve")
-    graph.add_edge("Retrieve", "RetrievalGrader")
-    graph.add_edge("RetrievalGrader", "Generate")
-    graph.add_edge("Generate", END)
-    
-
-
-# 홈 페이지 엔드포인트
-@app.get("/", response_class=HTMLResponse)
-async def get_home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-# API 엔드포인트 정의
-@app.post("/items/")
-async def create_item(request: QuestionRequest):
-    response = llm.invoke(request.question)
-    
-    print("response", response.content)  
-    return {"question": request.question, "generate": response.content}
-
-
-@app.post("/question/")
-async def process_question(request: QuestionRequest):
-    app = graph.compile(checkpointer=MemorySaver())
-    config = RunnableConfig(recursion_limit=20, configurable={"thread_id": random_uuid()})
-    state["question"] = request.question
-
-    # Execute the graph
+async def startup_event():
+    """애플리케이션 시작 시 시스템을 초기화합니다."""
     try:
-        stream_graph(app, state, config, ["agent", "generate_node"])
+        success = init()
+        if success:
+            logger.info("System initialized successfully. Chat graph is ready.")
+        else:
+            logger.error("System initialization failed!")
     except Exception as e:
-        print(f"Error during graph execution: {e}")
-        raise e
-    print("State after graph execution:", state)
+        logger.error(f"Failed to initialize system: {e}")
 
-    return {"question": state["question"], "generate": state['generation'], "documents": state["documents"], "hallucination_score": state["hallucination_score"]}
+if __name__ == "__main__":
+    uvicorn.run("main:app", host=HOST, port=PORT, reload=True)

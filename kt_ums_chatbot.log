@@ -1,0 +1,364 @@
+2025-04-06 19:40:57,853 - main - INFO - Initializing the system...
+2025-04-06 19:40:58,584 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_store\kt_ums_index
+2025-04-06 19:40:58,584 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 19:40:58,584 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 19:40:58,585 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\docs
+2025-04-06 19:40:58,585 - document_loader.utils - INFO - Searching for .docx files in C:\고재원\ai\back-end\docs
+2025-04-06 19:40:58,587 - document_loader.utils - INFO - Found 0 .docx files
+2025-04-06 19:40:58,587 - document_loader.loader - WARNING - No .docx files found
+2025-04-06 19:40:58,587 - document_loader.loader - ERROR - No documents to process
+2025-04-06 19:40:58,587 - main - ERROR - Failed to initialize system: Failed to initialize vector store
+2025-04-06 19:57:32,819 - main - INFO - Initializing the system...
+2025-04-06 19:57:33,671 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_store\kt_ums_index
+2025-04-06 19:57:33,671 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 19:57:33,671 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 19:57:33,671 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 19:57:33,671 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 19:57:33,672 - document_loader.loader - ERROR - Error loading KT-UMS OPEN API 연동규격_v1.07.docx: unstructured package not found, please install it with `pip install unstructured`
+2025-04-06 19:57:33,672 - document_loader.loader - INFO - Loaded total of 0 documents
+2025-04-06 19:57:33,672 - document_loader.loader - ERROR - No documents to process
+2025-04-06 19:57:33,672 - main - ERROR - Failed to initialize system: Failed to initialize vector store
+2025-04-06 19:58:10,423 - main - INFO - Initializing the system...
+2025-04-06 19:58:11,372 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_store\kt_ums_index
+2025-04-06 19:58:11,372 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 19:58:11,372 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 19:58:11,372 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 19:58:11,372 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 19:58:12,793 - document_loader.loader - ERROR - Error loading KT-UMS OPEN API 연동규격_v1.07.docx: No module named 'docx'
+2025-04-06 19:58:12,794 - document_loader.loader - INFO - Loaded total of 0 documents
+2025-04-06 19:58:12,794 - document_loader.loader - ERROR - No documents to process
+2025-04-06 19:58:12,794 - main - ERROR - Failed to initialize system: Failed to initialize vector store
+2025-04-06 20:02:27,351 - main - INFO - Initializing the system...
+2025-04-06 20:02:28,193 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_store\kt_ums_index
+2025-04-06 20:02:28,193 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 20:02:28,193 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:02:28,193 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:02:28,193 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:02:47,375 - document_loader.loader - INFO - Successfully loaded 1 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:02:47,376 - document_loader.loader - INFO - Loaded total of 1 documents
+2025-04-06 20:02:47,376 - document_loader.utils - INFO - Splitting 1 documents with chunk size 1000 and overlap 200
+2025-04-06 20:02:47,407 - document_loader.utils - INFO - Split documents into 491 chunks
+2025-04-06 20:02:52,690 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:02:54,542 - document_loader.loader - ERROR - Error creating vector store: FAISS.__init__() got an unexpected keyword argument 'index_name'
+2025-04-06 20:02:54,550 - main - ERROR - Failed to initialize system: Failed to initialize vector store
+2025-04-06 20:10:42,735 - main - INFO - Initializing the system...
+2025-04-06 20:10:43,566 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_store
+2025-04-06 20:10:43,567 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 20:10:43,567 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:10:43,567 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:10:43,568 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:10:57,735 - document_loader.loader - INFO - Successfully loaded 1 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:10:57,736 - document_loader.loader - INFO - Loaded total of 1 documents
+2025-04-06 20:10:57,736 - document_loader.utils - INFO - Splitting 1 documents with chunk size 1000 and overlap 200
+2025-04-06 20:10:57,765 - document_loader.utils - INFO - Split documents into 491 chunks
+2025-04-06 20:11:05,402 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:11:07,320 - document_loader.loader - ERROR - Error creating vector store: FAISS.__init__() got an unexpected keyword argument 'index_name'
+2025-04-06 20:11:07,328 - main - ERROR - Failed to initialize system: Failed to initialize vector store
+2025-04-06 20:15:05,693 - main - INFO - Initializing the system...
+2025-04-06 20:15:06,530 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_store
+2025-04-06 20:15:06,530 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 20:15:06,531 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:15:06,531 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:15:06,531 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:15:20,890 - document_loader.loader - INFO - Successfully loaded 1 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:15:20,890 - document_loader.loader - INFO - Loaded total of 1 documents
+2025-04-06 20:15:20,890 - document_loader.utils - INFO - Splitting 1 documents with chunk size 1000 and overlap 200
+2025-04-06 20:15:20,921 - document_loader.utils - INFO - Split documents into 491 chunks
+2025-04-06 20:15:20,921 - document_loader.loader - ERROR - Error creating vector store: name 'VECTOR_STORE_INDEX_NAME' is not defined
+2025-04-06 20:15:20,921 - main - ERROR - Failed to initialize system: Failed to initialize vector store
+2025-04-06 20:25:37,854 - main - INFO - Initializing the system...
+2025-04-06 20:25:38,714 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\data
+2025-04-06 20:25:38,715 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 20:25:38,715 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:25:38,715 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:25:38,716 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:25:53,026 - document_loader.loader - INFO - Successfully loaded 357 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:25:53,026 - document_loader.loader - INFO - Loaded total of 357 documents
+2025-04-06 20:25:53,026 - document_loader.utils - INFO - Splitting 357 documents with chunk size 500 and overlap 100
+2025-04-06 20:25:53,134 - document_loader.utils - INFO - Split documents into 950 chunks
+2025-04-06 20:26:01,876 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:26:09,622 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:26:11,264 - document_loader.loader - INFO - Saving vector store to C:\고재원\ai\back-end\data
+2025-04-06 20:26:11,265 - document_loader.loader - ERROR - Error saving vector store: Error in __cdecl faiss::FileIOWriter::FileIOWriter(const char *) at D:\a\faiss-wheels\faiss-wheels\faiss\faiss\impl\io.cpp:102: Error: 'f' failed: could not open C:\고재원\ai\back-end\data\index.faiss for writing: Illegal byte sequence
+2025-04-06 20:26:11,265 - document_loader.loader - INFO - Successfully created and saved vector store with 950 chunks
+2025-04-06 20:26:11,272 - graph.edges - INFO - Creating chat graph
+2025-04-06 20:26:11,273 - main - ERROR - Failed to initialize system: Found edge ending at unknown node `<function create_chat_graph.<locals>.should_clarify at 0x0000020A6F6272E0>`
+2025-04-06 20:27:25,700 - main - INFO - Initializing the system...
+2025-04-06 20:27:26,525 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_db
+2025-04-06 20:27:26,525 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 20:27:26,525 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:27:26,525 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:27:26,526 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:27:40,733 - document_loader.loader - INFO - Successfully loaded 357 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:27:40,734 - document_loader.loader - INFO - Loaded total of 357 documents
+2025-04-06 20:27:40,734 - document_loader.utils - INFO - Splitting 357 documents with chunk size 500 and overlap 100
+2025-04-06 20:27:40,825 - document_loader.utils - INFO - Split documents into 950 chunks
+2025-04-06 20:27:45,517 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:28:00,530 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:28:02,480 - document_loader.loader - INFO - Saving vector store to C:\고재원\ai\back-end\vector_db
+2025-04-06 20:28:02,481 - document_loader.loader - ERROR - Error saving vector store: Error in __cdecl faiss::FileIOWriter::FileIOWriter(const char *) at D:\a\faiss-wheels\faiss-wheels\faiss\faiss\impl\io.cpp:102: Error: 'f' failed: could not open C:\고재원\ai\back-end\vector_db\index.faiss for writing: Illegal byte sequence
+2025-04-06 20:28:02,481 - document_loader.loader - INFO - Successfully created and saved vector store with 950 chunks
+2025-04-06 20:28:02,488 - graph.edges - INFO - Creating chat graph
+2025-04-06 20:28:02,496 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 20:28:04,102 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 20:28:04,102 - main - INFO - System initialization completed
+2025-04-06 20:28:07,188 - main - INFO - Initializing the system...
+2025-04-06 20:28:08,020 - document_loader.loader - INFO - Loading vector store from C:\고재원\ai\back-end\vector_db
+2025-04-06 20:28:08,021 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 20:28:08,021 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:28:08,021 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:28:08,021 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:28:22,162 - document_loader.loader - INFO - Successfully loaded 357 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:28:22,162 - document_loader.loader - INFO - Loaded total of 357 documents
+2025-04-06 20:28:22,163 - document_loader.utils - INFO - Splitting 357 documents with chunk size 500 and overlap 100
+2025-04-06 20:28:22,254 - document_loader.utils - INFO - Split documents into 950 chunks
+2025-04-06 20:28:29,061 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:28:35,613 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:30:36,441 - main - INFO - Initializing the system...
+2025-04-06 20:30:37,288 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 20:30:37,288 - document_loader.loader - WARNING - Vector store does not exist. Processing documents...
+2025-04-06 20:30:37,288 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:30:37,289 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:30:37,289 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:30:51,992 - document_loader.loader - INFO - Successfully loaded 357 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:30:51,992 - document_loader.loader - INFO - Loaded total of 357 documents
+2025-04-06 20:30:51,992 - document_loader.utils - INFO - Splitting 357 documents with chunk size 500 and overlap 100
+2025-04-06 20:30:52,087 - document_loader.utils - INFO - Split documents into 950 chunks
+2025-04-06 20:30:58,341 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:31:05,479 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:31:07,518 - document_loader.loader - INFO - Saving vector store to vector_db
+2025-04-06 20:31:07,535 - document_loader.loader - INFO - Vector store saved successfully with 950 vectors
+2025-04-06 20:31:07,535 - document_loader.loader - INFO - Successfully created and saved vector store with 950 chunks
+2025-04-06 20:31:07,543 - graph.edges - INFO - Creating chat graph
+2025-04-06 20:31:07,550 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 20:31:07,856 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 20:31:07,857 - main - INFO - System initialization completed
+2025-04-06 20:47:35,576 - main - INFO - Initializing the system...
+2025-04-06 20:47:36,369 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 20:47:36,369 - document_loader.loader - ERROR - Error loading vector store: The de-serialization relies loading a pickle file. Pickle files can be modified to deliver a malicious payload that results in execution of arbitrary code on your machine.You will need to set `allow_dangerous_deserialization` to `True` to enable deserialization. If you do this, make sure that you trust the source of the data. For example, if you are loading a file that you created, and know that no one else has modified the file, then this is safe to do. Do not set this to `True` if you are loading a file from an untrusted source (e.g., some random site on the internet.).
+2025-04-06 20:47:36,370 - document_loader.loader - WARNING - Attempting to recreate vector store
+2025-04-06 20:47:36,370 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:47:36,370 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:47:36,370 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:47:50,585 - document_loader.loader - INFO - Successfully loaded 357 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:47:50,586 - document_loader.loader - INFO - Loaded total of 357 documents
+2025-04-06 20:47:50,586 - document_loader.utils - INFO - Splitting 357 documents with chunk size 500 and overlap 100
+2025-04-06 20:47:50,679 - document_loader.utils - INFO - Split documents into 950 chunks
+2025-04-06 20:47:57,687 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:48:05,455 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:48:07,781 - document_loader.loader - INFO - Saving vector store to vector_db
+2025-04-06 20:48:07,799 - document_loader.loader - INFO - Vector store saved successfully with 950 vectors
+2025-04-06 20:48:07,799 - document_loader.loader - INFO - Successfully created and saved vector store with 950 chunks
+2025-04-06 20:48:07,807 - graph.edges - INFO - Creating chat graph
+2025-04-06 20:48:07,814 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 20:48:07,948 - main - INFO - Graph generated as mermaid code:
+%%{init: {'flowchart': {'curve': 'linear'}}}%%
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	query_clarification(query_clarification)
+	query_rewriting(query_rewriting)
+	retrieve_context(retrieve_context)
+	generate_answer(generate_answer)
+	evaluate_answer(evaluate_answer)
+	refine_answer(refine_answer)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> query_clarification;
+	generate_answer --> evaluate_answer;
+	query_clarification --> query_rewriting;
+	query_rewriting --> retrieve_context;
+	refine_answer --> __end__;
+	retrieve_context --> generate_answer;
+	query_clarification -. &nbsp;needs_clarification&nbsp; .-> __end__;
+	query_clarification -. &nbsp;continue&nbsp; .-> query_rewriting;
+	evaluate_answer -. &nbsp;needs_refinement&nbsp; .-> refine_answer;
+	evaluate_answer -. &nbsp;final_answer&nbsp; .-> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+2025-04-06 20:48:07,949 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 20:48:08,233 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 20:48:08,234 - main - INFO - System initialization completed
+2025-04-06 20:56:30,368 - main - INFO - Initializing the system...
+2025-04-06 20:56:31,141 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 20:56:31,144 - document_loader.loader - ERROR - Error loading vector store: [Errno 2] No such file or directory: 'vector_db\\index.pkl'
+2025-04-06 20:56:31,144 - document_loader.loader - WARNING - Attempting to recreate vector store
+2025-04-06 20:56:31,144 - document_loader.loader - INFO - Processing documents and creating vector store
+2025-04-06 20:56:31,144 - document_loader.loader - INFO - Loading documents from C:\고재원\ai\back-end\data
+2025-04-06 20:56:31,144 - document_loader.loader - INFO - Loading document: KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:56:45,329 - document_loader.loader - INFO - Successfully loaded 357 documents from KT-UMS OPEN API 연동규격_v1.07.docx
+2025-04-06 20:56:45,329 - document_loader.loader - INFO - Loaded total of 357 documents
+2025-04-06 20:56:45,329 - document_loader.utils - INFO - Splitting 357 documents with chunk size 500 and overlap 100
+2025-04-06 20:56:45,421 - document_loader.utils - INFO - Split documents into 950 chunks
+2025-04-06 20:56:52,260 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:57:00,170 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 20:57:02,328 - document_loader.loader - INFO - Saving vector store to vector_db
+2025-04-06 20:57:02,345 - document_loader.loader - INFO - Vector store saved successfully with 950 vectors
+2025-04-06 20:57:02,345 - document_loader.loader - INFO - Successfully created and saved vector store with 950 chunks
+2025-04-06 20:57:02,352 - graph.edges - INFO - Creating chat graph
+2025-04-06 20:57:02,360 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 20:57:02,490 - main - INFO - Graph generated as mermaid code:
+%%{init: {'flowchart': {'curve': 'linear'}}}%%
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	query_clarification(query_clarification)
+	query_rewriting(query_rewriting)
+	retrieve_context(retrieve_context)
+	web_search(web_search)
+	generate_answer(generate_answer)
+	evaluate_answer(evaluate_answer)
+	refine_answer(refine_answer)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> query_clarification;
+	generate_answer --> evaluate_answer;
+	query_rewriting --> retrieve_context;
+	refine_answer --> __end__;
+	retrieve_context --> web_search;
+	web_search --> generate_answer;
+	query_clarification -. &nbsp;needs_clarification&nbsp; .-> __end__;
+	query_clarification -. &nbsp;continue&nbsp; .-> query_rewriting;
+	evaluate_answer -. &nbsp;needs_refinement&nbsp; .-> refine_answer;
+	evaluate_answer -. &nbsp;final_answer&nbsp; .-> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc
+
+2025-04-06 20:57:02,491 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 20:57:04,309 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 20:57:04,309 - main - INFO - System initialization completed
+2025-04-06 21:13:00,704 - main - INFO - Initializing the system...
+2025-04-06 21:13:01,492 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:13:01,517 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:13:01,517 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:13:01,525 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:13:01,531 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:13:03,455 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:13:03,455 - main - INFO - System initialization completed successfully
+2025-04-06 21:13:03,455 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:13:52,156 - main - INFO - Initializing the system...
+2025-04-06 21:13:52,951 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:13:52,966 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:13:52,966 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:13:52,975 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:13:52,981 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:13:53,217 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:13:53,218 - main - INFO - System initialization completed successfully
+2025-04-06 21:13:53,218 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:14:20,720 - main - INFO - Initializing the system...
+2025-04-06 21:14:21,534 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:14:21,548 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:14:21,549 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:14:21,556 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:14:21,562 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:14:21,790 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:14:21,790 - main - INFO - System initialization completed successfully
+2025-04-06 21:14:21,790 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:14:35,656 - main - INFO - Initializing the system...
+2025-04-06 21:14:36,432 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:14:36,446 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:14:36,446 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:14:36,455 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:14:36,461 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:14:36,707 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:14:36,707 - main - INFO - System initialization completed successfully
+2025-04-06 21:14:36,707 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:15:00,106 - main - INFO - Initializing the system...
+2025-04-06 21:15:00,897 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:15:00,910 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:15:00,911 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:15:00,919 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:15:00,924 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:15:01,176 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:15:01,176 - main - INFO - System initialization completed successfully
+2025-04-06 21:15:01,176 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:39:58,956 - main - INFO - Initializing the system...
+2025-04-06 21:39:59,755 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:39:59,769 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:39:59,769 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:39:59,779 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:39:59,785 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:40:00,130 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:40:00,130 - main - INFO - System initialization completed successfully
+2025-04-06 21:40:00,130 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:41:06,256 - main - INFO - Initializing the system...
+2025-04-06 21:41:07,064 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:41:07,079 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:41:07,079 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:41:07,087 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:41:07,093 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:41:07,400 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:41:07,400 - main - INFO - System initialization completed successfully
+2025-04-06 21:41:07,400 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:41:11,295 - main - INFO - 인입 된 질문 : what is 1+2 ?
+2025-04-06 21:41:11,378 - graph.nodes - INFO - Clarifying query: what is 1+2 ?
+2025-04-06 21:41:13,199 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-04-06 21:41:13,211 - graph.nodes - INFO - Query is clear, proceeding
+2025-04-06 21:41:13,212 - graph.edges - INFO - Routing to query_rewriting
+2025-04-06 21:41:13,213 - graph.nodes - INFO - Rewriting query: what is 1+2 ?
+2025-04-06 21:41:13,908 - agent.evaluator - INFO - Rewriting query: what is 1+2 ?
+2025-04-06 21:41:15,151 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-04-06 21:41:15,155 - agent.evaluator - INFO - Rewritten query: 원래 질문이 이미 충분히 명확합니다.
+2025-04-06 21:41:15,156 - graph.nodes - INFO - Retrieving context for query: 원래 질문이 이미 충분히 명확합니다.
+2025-04-06 21:41:16,409 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/embeddings "HTTP/1.1 200 OK"
+2025-04-06 21:41:16,418 - graph.nodes - INFO - Retrieved 5 documents
+2025-04-06 21:41:16,422 - graph.nodes - INFO - Deciding whether to perform web search
+2025-04-06 21:41:16,425 - graph.edges - INFO - Routing to generate_answer (skipping web search)
+2025-04-06 21:41:16,427 - graph.nodes - INFO - Generating answer
+2025-04-06 21:41:17,130 - graph.nodes - ERROR - Error generating answer: variable chat_history should be a list of base messages, got None of type <class 'NoneType'>
+2025-04-06 21:41:17,132 - graph.nodes - INFO - Evaluating answer
+2025-04-06 21:41:17,809 - agent.evaluator - INFO - Evaluating hallucination
+2025-04-06 21:41:17,812 - agent.evaluator - ERROR - Error evaluating hallucination: 'Input to ChatPromptTemplate is missing variables {\'\\n                "hallucination_score"\'}.  Expected: [\'\\n                "hallucination_score"\', \'context\', \'query\', \'response\'] Received: [\'query\', \'response\', \'context\']\nNote: if you intended {\n                "hallucination_score"} to be part of the string and not a variable, please escape it with double curly braces like: \'{{\n                "hallucination_score"}}\'.\nFor troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/INVALID_PROMPT_INPUT '
+2025-04-06 21:41:17,812 - agent.evaluator - INFO - Evaluating response quality
+2025-04-06 21:41:17,814 - agent.evaluator - ERROR - Error evaluating quality: 'Input to ChatPromptTemplate is missing variables {\'\\n                "accuracy_score"\'}.  Expected: [\'\\n                "accuracy_score"\', \'query\', \'response\'] Received: [\'query\', \'response\']\nNote: if you intended {\n                "accuracy_score"} to be part of the string and not a variable, please escape it with double curly braces like: \'{{\n                "accuracy_score"}}\'.\nFor troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/INVALID_PROMPT_INPUT '
+2025-04-06 21:41:17,814 - graph.nodes - INFO - Evaluation complete. Needs refinement: True
+2025-04-06 21:41:17,815 - graph.edges - INFO - Routing to refine_answer
+2025-04-06 21:41:17,817 - graph.nodes - INFO - Refining answer
+2025-04-06 21:41:21,889 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-04-06 21:41:21,896 - graph.nodes - INFO - Answer refined successfully
+2025-04-06 21:45:16,968 - main - INFO - 인입 된 질문 : UMS_sendSmsUrgent api로 광고메세지를 보내고 싶은데, 몇시부터 몇시 사이에 발송 가능해?
+2025-04-06 21:45:16,975 - graph.nodes - INFO - Clarifying query: UMS_sendSmsUrgent api로 광고메세지를 보내고 싶은데, 몇시부터 몇시 사이에 발송 가능해?
+2025-04-06 21:45:21,708 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-04-06 21:45:21,711 - graph.nodes - INFO - Query needs clarification
+2025-04-06 21:45:21,711 - graph.edges - INFO - Routing to END (needs clarification)
+2025-04-06 21:49:59,216 - main - INFO - Initializing the system...
+2025-04-06 21:49:59,984 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:49:59,998 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:49:59,998 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:50:00,007 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:50:00,013 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:50:00,305 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:50:00,305 - main - INFO - System initialization completed successfully
+2025-04-06 21:50:00,305 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 21:50:07,517 - main - INFO - 인입 된 질문 : UMS_sendSmsUrgent api로 광고메세지를 보내고 싶은데, 몇시부터 몇시 사이에 발송 가능해?
+2025-04-06 21:50:07,602 - graph.nodes - INFO - Clarifying query: UMS_sendSmsUrgent api로 광고메세지를 보내고 싶은데, 몇시부터 몇시 사이에 발송 가능해?
+2025-04-06 21:50:12,629 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-04-06 21:50:12,636 - graph.nodes - INFO - Query needs clarification
+2025-04-06 21:50:12,638 - graph.edges - INFO - Routing to END (needs clarification)
+2025-04-06 21:50:43,250 - main - INFO - 인입 된 질문 : UMS_sendSmsUrgent api에 대해 설명해줭
+2025-04-06 21:50:43,252 - graph.nodes - INFO - Clarifying query: UMS_sendSmsUrgent api에 대해 설명해줭
+2025-04-06 21:50:49,254 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-04-06 21:50:49,262 - graph.nodes - INFO - Query needs clarification
+2025-04-06 21:50:49,263 - graph.edges - INFO - Routing to END (needs clarification)
+2025-04-06 21:52:30,694 - main - INFO - Initializing the system...
+2025-04-06 21:52:31,465 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 21:52:31,480 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 21:52:31,480 - graph.edges - INFO - Creating chat graph
+2025-04-06 21:52:31,489 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 21:52:31,495 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 21:52:31,806 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 21:52:31,807 - main - INFO - System initialization completed successfully
+2025-04-06 21:52:31,807 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 22:04:06,567 - main - INFO - Initializing the system...
+2025-04-06 22:04:07,344 - document_loader.loader - INFO - Loading vector store from vector_db
+2025-04-06 22:04:07,359 - document_loader.loader - INFO - Vector store loaded successfully with 950 vectors
+2025-04-06 22:04:07,359 - graph.edges - INFO - Creating chat graph
+2025-04-06 22:04:07,368 - graph.edges - INFO - Chat graph created successfully
+2025-04-06 22:04:07,374 - main - INFO - Graph visualization saved to chat_graph.mmd
+2025-04-06 22:04:07,609 - main - INFO - Graph visualization saved to chat_graph.png
+2025-04-06 22:04:07,609 - main - INFO - System initialization completed successfully
+2025-04-06 22:04:07,609 - main - INFO - System initialized successfully. Chat graph is ready.
+2025-04-06 22:04:52,955 - main - INFO - 인입 된 질문 : UMS_sendSmsUrgent api에 대해 설명해줭
+2025-04-06 22:04:53,035 - graph.nodes - INFO - Clarifying query: UMS_sendSmsUrgent api에 대해 설명해줭
+2025-04-06 22:04:59,316 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-04-06 22:04:59,323 - graph.nodes - INFO - Query needs clarification
+2025-04-06 22:04:59,324 - graph.edges - INFO - 질문이 명확하지 않아 종료합니다ㅠㅠ 
