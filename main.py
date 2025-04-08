@@ -1,12 +1,41 @@
+from fastapi import FastAPI, Request, HTTPException
+from pydantic import BaseModel
+from dotenv import load_dotenv
+from langchain_openai import ChatOpenAI
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+from langgraph.graph import Graph
+from langchain_core.documents import Document
+from results_modules_02 import RetrievalGrader, HallucinationGrader, ResultCache, Generate
+from langchain_openai import ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate
+from langgraph.graph import END, StateGraph, START
+from langgraph.checkpoint.memory import MemorySaver
+from langchain_openai import ChatOpenAI
+from langchain_core.output_parsers import StrOutputParser
+from typing_extensions import TypedDict, Annotated
+from typing import List
+from langchain_teddynote.messages import stream_graph, random_uuid
+from langchain_core.runnables import RunnableConfig
+from fastapi.middleware.cors import CORSMiddleware
+
 import logging
 import os
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 
-import uvicorn
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+# 템플릿 경로 설정
+templates = Jinja2Templates(directory="templates")
 
 from langchain_community.vectorstores import FAISS
 from langchain_core.vectorstores import VectorStoreRetriever

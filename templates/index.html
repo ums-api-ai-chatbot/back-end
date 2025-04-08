@@ -21,11 +21,11 @@
       });
   
       const data = await response.json();
-      alert(data.answer); // 답변 출력
+      alert(data.generate); // 답변 출력
     }
 </script>
 <body>
-    <h1>Welcome to FastAPI Chat!!!</h1>
+    <h1>Welcome to FastAPI Chat!!</h1>
     <form onsubmit="submitForm(event)">
         <label for="question">Ask a question:</label><br>
         <input type="text" id="question" name="question" required><br><br>
