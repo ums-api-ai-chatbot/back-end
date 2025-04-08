@@ -2,3 +2,5 @@
 .dockerignore
 __pycache__/
 *.pyc
+kt_ums_chatbot
+chat_graph
