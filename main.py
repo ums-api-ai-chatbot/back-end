@@ -17,6 +17,7 @@ from typing_extensions import TypedDict, Annotated
 from typing import List
 from langchain_teddynote.messages import stream_graph, random_uuid
 from langchain_core.runnables import RunnableConfig
+from fastapi.middleware.cors import CORSMiddleware
 
 import logging
 # 환경 변수 로드
@@ -24,6 +25,23 @@ load_dotenv()
 MODEL_NAME="gpt-4o-mini"
 # FastAPI 앱 생성
 app = FastAPI()
+
+origins = [
+    "http://localhost:8080",
+    "http://localhost:8000",
+    "http://211.254.213.18:8000",
+    "http://211.254.213.18:8080",
+    "http://211.254.213.18:32767",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # 템플릿 경로 설정
 templates = Jinja2Templates(directory="templates")
