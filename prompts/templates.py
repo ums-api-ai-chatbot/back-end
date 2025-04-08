@@ -36,9 +36,6 @@ def create_query_clarification_prompt() -> ChatPromptTemplate:
 def create_answer_refinement_prompt() -> ChatPromptTemplate:
     """
     답변 개선을 위한 프롬프트 템플릿을 생성합니다.
-    
-    Returns:
-        ChatPromptTemplate: 생성된 프롬프트 템플릿
     """
     prompt = ChatPromptTemplate.from_messages([
         ("system", """당신은 KT-UMS OPEN API에 대한 전문가입니다.
@@ -46,10 +43,11 @@ def create_answer_refinement_prompt() -> ChatPromptTemplate:
         필요한 경우 정확성, 명확성, 구체성을 향상시키세요.
         오류가 있다면 수정하고, 누락된 중요 정보가 있다면 추가하세요.
         답변은 사용자가 KT-UMS OPEN API를 이해하고 사용하는 데 도움이 되어야 합니다."""),
+
+        # 이스케이프 처리된 변수
         ("human", "원래 질문: {query}"),
         ("human", "원래 답변: {initial_answer}"),
-        ("human", "평가 피드백: {feedback}"),
+        ("human", "평가 피드백: {{hallucination_score}}, {{accuracy_score}}"),
         ("human", "개선된 답변을 제공해주세요.")
     ])
-    
     return prompt

@@ -85,7 +85,7 @@ def query_clarification(state: Question) -> Dict[str, Any]:
     else:
         logger.info("Query needs clarification")
         return {
-            "needs_clarification": True,
+            "needs_clarification": False,
             "clarification_message": result,
             "query": state["query"]
         }
@@ -253,8 +253,8 @@ def generate_answer(state: Dict[str, Any]) -> Dict[str, Any]:
         {
             "query": lambda x: x["query"],
             "context": lambda x: "\n\n".join(x["context"]),
-            "chat_history": lambda x: x.get("chat_history", [])
-        }
+            "chat_history": lambda x: x["chat_history"] if x.get("chat_history") is not None else []        
+            }
         | prompt
         | llm
         | StrOutputParser()
@@ -280,13 +280,6 @@ def generate_answer(state: Dict[str, Any]) -> Dict[str, Any]:
 def evaluate_answer(state: Dict[str, Any]) -> Dict[str, Any]:
     """
     답변 평가 노드.
-    생성된 답변의 품질과 할루시네이션 여부를 평가합니다.
-    
-    Args:
-        state: 현재 상태 (질문, 답변, 문맥 포함)
-        
-    Returns:
-        Dict[str, Any]: 평가 결과
     """
     logger.info("Evaluating answer")
     
@@ -297,34 +290,31 @@ def evaluate_answer(state: Dict[str, Any]) -> Dict[str, Any]:
     context = state["context"]
     
     try:
+        # 할루시네이션 평가
         hallucination_result = evaluator.evaluate_hallucination(query, answer, context)
-        quality_result = evaluator.evaluate_quality(query, answer)
+        logger.info(f"Hallucination evaluation result: {hallucination_result}")
         
-        # 개선이 필요한지 결정
+        # 품질 평가
+        quality_result = evaluator.evaluate_quality(query, answer)
+        logger.info(f"Quality evaluation result: {quality_result}")
+        
+        # 개선 필요 여부 결정
         needs_refinement = (
             hallucination_result.get("has_hallucination", False) or
             quality_result.get("average_score", 5) < 4.0
         )
         
-        logger.info(f"Evaluation complete. Needs refinement: {needs_refinement}")
-        
         return {
             "hallucination": hallucination_result,
             "quality": quality_result,
-            "needs_refinement": needs_refinement,
-            "answer": answer,
-            "query": query,
-            "context": context
+            "needs_refinement": needs_refinement
         }
     except Exception as e:
         logger.error(f"Error evaluating answer: {e}")
         return {
             "hallucination": {"error": str(e)},
             "quality": {"error": str(e)},
-            "needs_refinement": True,
-            "answer": answer,
-            "query": query,
-            "context": context
+            "needs_refinement": True
         }
 
 def refine_answer(state: Dict[str, Any]) -> Dict[str, Any]:
@@ -349,8 +339,8 @@ def refine_answer(state: Dict[str, Any]) -> Dict[str, Any]:
     prompt = create_answer_refinement_prompt()
     
     # 평가 피드백 작성
-    hallucination = state["hallucination"]
-    quality = state["quality"]
+    hallucination = state.get("hallucination", {})
+    quality = state.get("quality", {})
     
     feedback = []
     
