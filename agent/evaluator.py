@@ -46,11 +46,11 @@ class ResponseEvaluator:
             할루시네이션이 있다면, 어떤 부분이 문맥에 없는 정보인지 구체적으로 지적해주세요.
             
             마지막으로, JSON 형식으로 다음 필드를 포함하여 응답해주세요:
-            {
+            {{
                 "hallucination_score": (1-5 사이의 정수),
                 "explanation": "할루시네이션에 대한 설명",
                 "has_hallucination": (true/false, 점수가 3 이상이면 true)
-            }
+            }}
             """
         )
         
@@ -69,7 +69,7 @@ class ResponseEvaluator:
             - 완전성: 응답이 질문에 완전히 답변하는가?
             
             JSON 형식으로 다음 필드를 포함하여 응답해주세요:
-            {
+            {{
                 "accuracy_score": (1-5 사이의 정수),
                 "relevance_score": (1-5 사이의 정수),
                 "clarity_score": (1-5 사이의 정수),
@@ -77,7 +77,7 @@ class ResponseEvaluator:
                 "average_score": (위 점수들의 평균),
                 "explanation": "점수에 대한 설명",
                 "suggestions": "개선을 위한 제안"
-            }
+            }}
             """
         )
         
@@ -173,59 +173,59 @@ class ResponseEvaluator:
                 "has_hallucination": True
             }
     
-    def evaluate_quality(self, query: str, response: str, context: List[str]) -> Dict[str, Any]:
-        """
-        응답의 할루시네이션을 평가합니다.
-        """
-        logger.info("Evaluating hallucination")
+    # def evaluate_quality(self, query: str, response: str, context: List[str]) -> Dict[str, Any]:
+    #     """
+    #     응답의 할루시네이션을 평가합니다.
+    #     """
+    #     logger.info("Evaluating hallucination")
         
-        # 문맥 텍스트 결합
-        context_text = "\n\n".join(context)
+    #     # 문맥 텍스트 결합
+    #     context_text = "\n\n".join(context)
         
-        # 입력 데이터 검증
-        if not query or not response or not context_text:
-            logger.error("Missing required inputs for hallucination evaluation")
-            return {
-                "hallucination_score": 3,
-                "explanation": "필수 입력 데이터가 누락되었습니다.",
-                "has_hallucination": True
-            }
+    #     # 입력 데이터 검증
+    #     if not query or not response or not context_text:
+    #         logger.error("Missing required inputs for hallucination evaluation")
+    #         return {
+    #             "hallucination_score": 3,
+    #             "explanation": "필수 입력 데이터가 누락되었습니다.",
+    #             "has_hallucination": True
+    #         }
         
-        # 평가 체인 실행
-        chain = self.hallucination_prompt | self.llm | StrOutputParser()
+    #     # 평가 체인 실행
+    #     chain = self.hallucination_prompt | self.llm | StrOutputParser()
         
-        try:
-            result = chain.invoke({
-                "query": query,
-                "response": response,
-                "context": context_text
-            })
+    #     try:
+    #         result = chain.invoke({
+    #             "query": query,
+    #             "response": response,
+    #             "context": context_text
+    #         })
             
-            # 결과 디버깅
-            logger.debug(f"Raw hallucination evaluation result: {result}")
+    #         # 결과 디버깅
+    #         logger.debug(f"Raw hallucination evaluation result: {result}")
             
-            # JSON 추출
-            import json
-            import re
-            json_match = re.search(r'{.*?}', result, re.DOTALL)
-            if json_match:
-                evaluation = json.loads(json_match.group(0))
-                logger.info(f"Hallucination evaluation: {evaluation}")
-                return evaluation
-            else:
-                logger.warning("Failed to parse hallucination evaluation result")
-                return {
-                    "hallucination_score": 3,
-                    "explanation": "평가 결과를 파싱하는 데 실패했습니다.",
-                    "has_hallucination": True
-                }
-        except Exception as e:
-            logger.error(f"Error evaluating hallucination: {e}")
-            return {
-                "hallucination_score": 3,
-                "explanation": f"평가 중 오류 발생: {str(e)}",
-                "has_hallucination": True
-            }   
+    #         # JSON 추출
+    #         import json
+    #         import re
+    #         json_match = re.search(r'{.*?}', result, re.DOTALL)
+    #         if json_match:
+    #             evaluation = json.loads(json_match.group(0))
+    #             logger.info(f"Hallucination evaluation: {evaluation}")
+    #             return evaluation
+    #         else:
+    #             logger.warning("Failed to parse hallucination evaluation result")
+    #             return {
+    #                 "hallucination_score": 3,
+    #                 "explanation": "평가 결과를 파싱하는 데 실패했습니다.",
+    #                 "has_hallucination": True
+    #             }
+    #     except Exception as e:
+    #         logger.error(f"Error evaluating hallucination: {e}")
+    #         return {
+    #             "hallucination_score": 3,
+    #             "explanation": f"평가 중 오류 발생: {str(e)}",
+    #             "has_hallucination": True
+    #         }   
     
     def rewrite_query(self, query: str) -> str:
         """
@@ -249,58 +249,58 @@ class ResponseEvaluator:
             logger.error(f"Error rewriting query: {e}")
             return query  # 오류 발생 시 원래 질문 반환
         
-    # def evaluate_quality(self, query: str, response: str) -> Dict[str, Any]:
-    #     """
-    #     응답 품질을 평가합니다.
+    def evaluate_quality(self, query: str, response: str) -> Dict[str, Any]:
+        """
+        응답 품질을 평가합니다.
         
-    #     Args:
-    #         query: 사용자 질문
-    #         response: AI 답변
+        Args:
+            query: 사용자 질문
+            response: AI 답변
             
-    #     Returns:
-    #         Dict[str, Any]: 품질 평가 결과
-    #     """
-    #     logger.info("Evaluating response quality")
+        Returns:
+            Dict[str, Any]: 품질 평가 결과
+        """
+        logger.info("Evaluating response quality")
         
-    #     # 평가 체인 실행
-    #     chain = self.quality_prompt | self.llm | StrOutputParser()
+        # 평가 체인 실행
+        chain = self.quality_prompt | self.llm | StrOutputParser()
         
-    #     try:
-    #         result = chain.invoke({
-    #             "query": query,
-    #             "response": response
-    #         })
+        try:
+            result = chain.invoke({
+                "query": query,
+                "response": response
+            })
             
-    #         # 결과 디버깅
-    #         logger.debug(f"Raw quality evaluation result: {result}")
+            # 결과 디버깅
+            logger.debug(f"Raw quality evaluation result: {result}")
             
-    #         # JSON 추출
-    #         import json
-    #         import re
-    #         json_match = re.search(r'{.*?}', result, re.DOTALL)
-    #         if json_match:
-    #             evaluation = json.loads(json_match.group(0))
-    #             logger.info(f"Quality evaluation: {evaluation}")
-    #             return evaluation
-    #         else:
-    #             logger.warning("Failed to parse quality evaluation result")
-    #             return {
-    #                 "accuracy_score": 3,
-    #                 "relevance_score": 3,
-    #                 "clarity_score": 3,
-    #                 "completeness_score": 3,
-    #                 "average_score": 3.0,
-    #                 "explanation": "평가 결과를 파싱하는 데 실패했습니다.",
-    #                 "suggestions": "오류를 해결하고 다시 평가해보세요."
-    #             }
-    #     except Exception as e:
-    #         logger.error(f"Error evaluating quality: {e}")
-    #         return {
-    #             "accuracy_score": 3,
-    #             "relevance_score": 3,
-    #             "clarity_score": 3,
-    #             "completeness_score": 3,
-    #             "average_score": 3.0,
-    #             "explanation": f"평가 중 오류 발생: {str(e)}",
-    #             "suggestions": "오류를 해결하고 다시 평가해보세요."
-    #         }
+            # JSON 추출
+            import json
+            import re
+            json_match = re.search(r'{.*?}', result, re.DOTALL)
+            if json_match:
+                evaluation = json.loads(json_match.group(0))
+                logger.info(f"Quality evaluation: {evaluation}")
+                return evaluation
+            else:
+                logger.warning("Failed to parse quality evaluation result")
+                return {
+                    "accuracy_score": 3,
+                    "relevance_score": 3,
+                    "clarity_score": 3,
+                    "completeness_score": 3,
+                    "average_score": 3.0,
+                    "explanation": "평가 결과를 파싱하는 데 실패했습니다.",
+                    "suggestions": "오류를 해결하고 다시 평가해보세요."
+                }
+        except Exception as e:
+            logger.error(f"Error evaluating quality: {e}")
+            return {
+                "accuracy_score": 3,
+                "relevance_score": 3,
+                "clarity_score": 3,
+                "completeness_score": 3,
+                "average_score": 3.0,
+                "explanation": f"평가 중 오류 발생: {str(e)}",
+                "suggestions": "오류를 해결하고 다시 평가해보세요."
+            }
