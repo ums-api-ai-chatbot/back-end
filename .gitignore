@@ -1,6 +1,12 @@
 .env
 .dockerignore
-__pycache__/
+__pycache__/*
 *.pyc
 kt_ums_chatbot
 chat_graph
+*/__pycache__/*
+venv
+# Python 바이트코드 파일
+__pycache__/
+*.py[cod]
+*$py.class

@@ -22,7 +22,8 @@ import os
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 
-
+# 캐시 기능 추가
+from utils.response_cache import ChatResponseCache
 
 # 템플릿 경로 설정
 templates = Jinja2Templates(directory="templates")
@@ -69,9 +70,9 @@ class AppState:
         self.document_processor = None
         self.retriever = None
         self.chat_graph = None
+        self.response_cache = ChatResponseCache(max_size=1000, ttl=86400)  # 24시간 TTL로 캐시 생성
 
 app_state = AppState()
-
 
 
 # 모델 정의
@@ -84,7 +85,6 @@ class ChatResponse(BaseModel):
     needs_clarification: bool = False
     clarification_message: Optional[str] = None
     evaluation: Optional[Dict[str, Any]] = None
-
 
 
 # 초기화 함수
@@ -176,9 +176,14 @@ async def ask_question(request: QuestionRequest):
     if app_state.chat_graph is None:
         raise HTTPException(status_code=500, detail="초 비 상 !!!!!")
     
-    
     try:
-        # 그래프 실행
+        # 캐시에서 응답 검색
+        cached_response = app_state.response_cache.get(request.query, request.chat_history)
+        if cached_response:
+            logger.info(f"캐시된 응답 반환: {request.query[:30]}...")
+            return ChatResponse(**cached_response)
+        
+        # 캐시 미스 - 그래프 실행
         result = app_state.chat_graph.invoke({
             "query": request.query,
             "chat_history": request.chat_history
@@ -186,11 +191,13 @@ async def ask_question(request: QuestionRequest):
         
         # 결과 처리
         if result.get("needs_clarification", False):
-            return ChatResponse(
+            response = ChatResponse(
                 answer="",
                 needs_clarification=True,
                 clarification_message=result.get("clarification_message", "질문을 명확히 해주세요.")
             )
+            # 명확화가 필요한 질문은 캐싱하지 않음
+            return response
         
         # 최종 답변 결정
         answer = result.get("final_answer") or result.get("answer") or "답변을 생성할 수 없습니다."
@@ -203,16 +210,39 @@ async def ask_question(request: QuestionRequest):
                 "quality": result["quality"]
             }
         
-        return ChatResponse(
+        response = ChatResponse(
             answer=answer,
             evaluation=evaluation
         )
+        
+        # 재작성된 질문이 있는 경우 함께 저장
+        rewritten_query = result.get("rewritten_query", None)
+        
+        # 응답을 캐시에 저장
+        app_state.response_cache.set(
+            request.query, 
+            response.dict(), 
+            request.chat_history,
+            rewritten_query=rewritten_query
+        )
+        
+        return response
     
     except Exception as e:
         logger.error(f"Error processing question: {e}")
         raise HTTPException(status_code=500, detail=f"Error processing question: {str(e)}")
 
+# 캐시 관리 엔드포인트 추가
+@app.get("/cache/stats")
+async def get_cache_stats():
+    """캐시 통계를 반환합니다."""
+    return app_state.response_cache.get_stats()
 
+@app.post("/cache/clear")
+async def clear_cache():
+    """캐시를 비웁니다."""
+    app_state.response_cache.clear()
+    return {"message": "Cache cleared successfully"}
 
 @app.on_event("startup")
 async def startup_event():
