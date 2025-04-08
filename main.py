@@ -6,7 +6,6 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from langgraph.graph import Graph
 from langchain_core.documents import Document
-from results_modules_02 import RetrievalGrader, HallucinationGrader, ResultCache, Generate
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, StateGraph, START
@@ -24,14 +23,6 @@ import os
 from pathlib import Path
 from typing import Dict, List, Any, Optional
 
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 # 템플릿 경로 설정
@@ -60,7 +51,16 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="KT-UMS ChatBot API",
     description="E.G DEV 통신AX플랫폼담당 프로젝트",
-    version=1.0
+    version="1.0"
+)
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
