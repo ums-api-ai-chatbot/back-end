@@ -12,37 +12,37 @@ KT-UMS OPEN API 연동규격 문서를 바탕으로
 BACK_END/
 ├── main.py                # FastAPI 메인 애플리케이션
 ├── config.py              # 환경 설정 및 상수
-├── document_loader/       # 문서 처리 관련 컴포넌트트
-│   ├── __init__.py
-│   └── loader.py          # 문서 로딩 및 벡터 저장 관련
 │
-├── search/                # 에이전트
-│   ├── __init__.py
+├── document_loader/       # 문서 처리 관련 컴포넌트
+│   ├── util.py            # 문서 로드 및 문서 분할
+│   └── loader.py          # 문서 -> 벡터DB
+│
+├── vector_db/             # 벡터DB
+│   ├── index.faiss        # 벡터 index data
+│   └── index.pkl          # 문서 deserialized data
+│
+├── agent/                 # 에이전트
 │   ├── evaluator.py       # 답변 품질 측정
 │   └── tools.py           # 인터넷 검색 도구
 │
 ├── graph/                 # 그래프
-│   ├── __init__.py
 │   ├── nodes.py           # LangGraph 노드 정의
 │   ├── edges.py           # LangGraph 엣지 정의
 │   └── graph.py           # LangGraph 그래프 및 상태 구성
 │
 ├── prompts/
-│   ├── __init__.py
 │   ├── system.py          # 프롬프트
 │   └── templates.py       # 각 노드별 프롬프트 템플릿
 │
 ├── utils/
-│   ├── __init__.py
-│   └── helpers.py          # 로깅 및 요청/응답 포맷
+│   └── helpers.py         # 로깅 및 요청/응답 포맷
 │
 ├── data/
-│   └── KT-UMS OPEN API 연동규격_v1.07.docx  # 문서서
+│   └── KT-UMS OPEN API 연동규격_v1.07.docx  # 문서
 │
-├── vector_db/
-│   ├── index.faiss        # 벡터 index data
-│   └── index.pkl          # 문서 deserialized data
 │
+├── kt_ums_chatbot.log     # 요청 처리 로그 저장
+├── chat_graph.png         # 생성한 LangGraph 구조, 서버 가동시 자동 생성
 ├── .env                   # 환경 변수 파일
 ├── requirements.txt       # 필요한 패키지 목록
 └── README.md              # 프로젝트 설명
@@ -52,8 +52,9 @@ BACK_END/
 ![랭그래프구조다](chat_graph.png)
 
 ## 주요 기술 스택
-나중에 채울 것
-
+langgraph
+fastapi
+FAISS
 
 ### 질문 처리
 
@@ -103,15 +104,47 @@ BACK_END/
 
 ## 특이사항
 
-기본적으로 서버 실행 시 init()을 통해 문서를 읽고, 벡터DB로 만들어 vector_db 디렉토리에 저장이 됩니다. (나중에 서버 init시 해당 파일을 읽거나, 없으면 새로 생성하여 저장)
+## 문서
+- UnstructuredWordDocumentLoader를 통한 docx 로드
+- RecursiveCharacterTextSplitter을 통한 문서 분할
+- OpenAI, FAISS를 통한 문서 임베딩 및 벡터DB 생성
+- 벡터DB를 로컬에 저장하여 서버 재기동시 추가 작업 없이 빠르게 가동
 
-그 뒤 랭그래프 그래프 생성이 되며, 생성이 완료되면 그래프 구조를 chat_graph.png로 만들어 저장합니다. 
+## 서버
+- 서버 생성시 랭그래프 초기화 및 LangGraph 구조를 png파일로 저장
+- 서버에서 요청 처리시 로그 출력 및 파일로 저장
+- cicd등 장점 자유롭게 추가 해 주시면 됩니다.
 
+## RAG
+- LangGraph를 통한 확장성 증대
+- LanGraph 내의 쿼리 재작성, 인터넷 검색 에이전트, 답변 품질 측정 등 다양한 노드 개발
 
+## 역할
+홍문기 선임
+- 문서 파싱 모듈 구현
+- 청킹 전략 구현 및 최적화
+- 인덱싱 시스템 구현
+- 임베딩 생성 및 저장 로직 개발
 
+김지희 전임
+- RAG 응답 생성 시스템 구현
+- 문서 관련성 평가 로직 구현
+- 할루시네이션 검출 모듈 개발
+- 응답 품질 측정 시스템 개발
+- 응답 캐싱 매커니즘 구현
 
+류호원 전임
+- backend/frontend 전체 배포 환경 구성
+- CI/CD 파이프라인 설정
+- 시스템 로깅 구축
 
-## CI/CD 파이프라인인
+고재원 전임
+- LLM 프롬프트 엔지니어링
+- 쿼리 분석/재작성 모듈 구현
+- 웹 검색 통합 모듈 구현
+- LangGraph 라우팅 구현
+
+## CI/CD 파이프라인
 
 ![pipeline](pipeline.png)
 
@@ -150,10 +183,22 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ## 개선 POINT
+### 속도
+- 답변 캐싱을 통한 응답 속도 향상
+- docx -> markdown 변환 및 청킹 단위 조절을 통한 검색 속도 향상
+- 스트리밍 처리를 통한 응답 지연 시간 감소
+  
+### 정확도
+- 엔트로픽/openai 프롬프트 엔지니어링을 통한 답변 정확도 향상
+- 쿼리 재작성을 통한 답변 정확도 향상
+
+
+## 기타
+
 
 답변 캐싱
 파라미터에 대한 자세한 옵션
-파생 질문 다양화화
+파생 질문 다양화
 
 ## 라이선스
 Apache-2.0 license
