@@ -4,19 +4,6 @@ KT-UMS OPEN API 연동규격 문서를 바탕으로
 사용자 질문에 답변하는 챗봇 서비스의 백엔드 서버
 
 
-## 실행 방법
-
-```bash
-venv\Scripts\activate 
-pip install -r requirements.txt
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-
-## 특이사항
-
-기본적으로 서버 실행 시 init()을 통해 문서를 읽고, 벡터DB로 만들어 vector_db 디렉토리에 저장이 됩니다. (나중에 서버 init시 해당 파일을 읽거나, 없으면 새로 생성하여 저장)
-
-그 뒤 랭그래프 그래프 생성이 되며, 생성이 완료되면 그래프 구조를 chat_graph.png로 만들어 저장합니다. 
 
 
 ## 프로젝트 구조
@@ -114,12 +101,19 @@ BACK_END/
 }
 ```
 
+## 특이사항
+
+기본적으로 서버 실행 시 init()을 통해 문서를 읽고, 벡터DB로 만들어 vector_db 디렉토리에 저장이 됩니다. (나중에 서버 init시 해당 파일을 읽거나, 없으면 새로 생성하여 저장)
+
+그 뒤 랭그래프 그래프 생성이 되며, 생성이 완료되면 그래프 구조를 chat_graph.png로 만들어 저장합니다. 
 
 
-## 라이선스
 
-이 프로젝트의 라이선스는 모르겠으니 KT 라이센스로 하겠습니다. 그런데 이제 DS를 곁들인....
-ci/cd 파이프라인 설명입니다!
+
+
+## CI/CD 파이프라인인
+
+![pipeline](pipeline.png)
 
 
 o CI
@@ -146,3 +140,20 @@ fastapi 페이지 주소 (back-end) : http://211.254.213.18:30000
 3. ci 4번으로 소스코드가 변경되면 argo가 관리하는 pod의 이미지(기존)와 새로운 소스코드의 이미지의 태그가 달라지게 됩니다.
 4. argo cd 는 달라진 이미지 태그를 감지하여 out of sync 상태가 됩니다.
 5. argo cd 에서 sync를 맟춰주면 관리하는 pod 에서 새로운 이미지를 pull  받아 배포됩니다.
+
+## 실행 방법
+
+```bash
+venv\Scripts\activate 
+pip install -r requirements.txt
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+## 개선 POINT
+
+답변 캐싱
+파라미터에 대한 자세한 옵션
+파생 질문 다양화화
+
+## 라이선스
+Apache-2.0 license
