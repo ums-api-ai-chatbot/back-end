@@ -124,7 +124,8 @@ argocd<br />
 ## 서버
 - 서버 생성시 랭그래프 초기화 및 LangGraph 구조를 png파일로 저장
 - 서버에서 요청 처리시 로그 출력 및 파일로 저장
-- cicd등 장점 자유롭게 추가 해 주시면 됩니다.
+- fastapi 사용을 통한 python 의존성 문제 해결
+- kubernetes 구성을 통한 안정적인 서비스 제공 환경 구현
 
 ## RAG
 - LangGraph를 통한 확장성 증대
@@ -210,6 +211,7 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 
 ### 답변 품질
 - max token 넘는 질문에 대한 인식
+- ums 와 관련없는 질문에 대한 처리
 
 
 ## 기타
