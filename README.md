@@ -3,7 +3,15 @@
 KT-UMS OPEN API 연동규격 문서를 바탕으로 
 사용자 질문에 답변하는 챗봇 서비스의 백엔드 서버
 
+o 질문 예시 1
+![q1](q1.png)
+o 답변 예시 1
+![a1](a1.png)
 
+o 질문 예시 2
+![q1](q2.png)
+o 답변 예시 2
+![a1](a2.png)
 
 
 ## 프로젝트 구조
@@ -52,9 +60,12 @@ BACK_END/
 ![랭그래프구조다](chat_graph.png)
 
 ## 주요 기술 스택
-langgraph
-fastapi
-FAISS
+langgraph<br />
+fastapi<br />
+FAISS<br />
+vue<br />
+k3s<br />
+argocd<br />
 
 ### 질문 처리
 
@@ -168,10 +179,10 @@ o CD
 
 o kubernetes(k3s) + argocd 사용
 
-서버 주소(kt cloud vm) : 211.254.213.18
-argo cd 주소 : http://211.254.213.18:30518
-vue 페이지 주소 (front-end) : http://211.254.213.18:32767
-fastapi 페이지 주소 (back-end) : http://211.254.213.18:30000
+서버 주소(kt cloud vm) : 211.254.213.18<br />
+argo cd 주소 : http://211.254.213.18:30518<br />
+vue 페이지 주소 (front-end) : http://211.254.213.18:32767<br />
+fastapi 페이지 주소 (back-end) : http://211.254.213.18:30000<br />
 
 1. k3s로 서버의 전체 pod를 관리합니다.
 2. argo cd pod가 git repo의 deployment.yaml을 바라보며 vue ns의 pod 및 fastapi ns의 pod 를 관리 합니다.
@@ -197,13 +208,16 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 - 엔트로픽/openai 프롬프트 엔지니어링을 통한 답변 정확도 향상
 - 쿼리 재작성을 통한 답변 정확도 향상
 
+### 답변 품질
+- max token 넘는 질문에 대한 인식
+
 
 ## 기타
 
 
-답변 캐싱
-파라미터에 대한 자세한 옵션
-파생 질문 다양화
+답변 캐싱<br />
+파라미터에 대한 자세한 옵션<br />
+파생 질문 다양화<br />
 
-## 라이선스
-Apache-2.0 license
+<!-- ## 라이선스
+Apache-2.0 license -->
